@@ -1,0 +1,169 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--  <title>Emails for {{ receiver }}</title>-->
+<!--  &lt;!&ndash; Bootstrap CSS &ndash;&gt;-->
+<!--  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
+<!--  &lt;!&ndash; DataTables CSS &ndash;&gt;-->
+<!--  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/dataTables.bootstrap4.min.css">-->
+<!--</head>-->
+<!--<body>-->
+<!--  <div class="container mt-5">-->
+<!--    <h2>Emails for {{ receiver }}</h2>-->
+<!--    <table id="dataTable" class="table table-striped table-bordered">-->
+<!--      <thead>-->
+<!--        <tr class="bg-success text-white">-->
+<!--          <th>Date-Time</th>-->
+<!--          <th>Email From</th>-->
+<!--          <th>Email To</th>-->
+<!--          <th>Subject</th>-->
+<!--        </tr>-->
+<!--      </thead>-->
+<!--      <tbody>-->
+<!--        {% for email in emails %}-->
+<!--        <tr data-toggle="collapse">-->
+<!--          <td>{{ email[1].received_time }}</td>-->
+<!--          <td>{{ email[1].sender }}</td>-->
+<!--          <td>{{ email[1].recipients }}</td>-->
+<!--          <td>{{ email[1].subject }}</td>-->
+<!--        </tr>-->
+<!--        <tr class="collapse-row">-->
+<!--          <td colspan="4">-->
+<!--            <div class="card card-body collapse">-->
+<!--              {{ email[1].content }}-->
+<!--            </div>-->
+<!--          </td>-->
+<!--        </tr>-->
+<!--        {% endfor %}-->
+<!--      </tbody>-->
+<!--    </table>-->
+<!--  </div>-->
+
+<!--  &lt;!&ndash; Bootstrap JavaScript &ndash;&gt;-->
+<!--  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>-->
+<!--  <script src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.min.js"></script>-->
+<!--  <script src="https://cdn.datatables.net/1.10.23/js/dataTables.bootstrap4.min.js"></script>-->
+<!--  <script>-->
+<!--    $(document).ready(function(){-->
+<!--      $('#dataTable').DataTable({-->
+<!--        "order": [[ 0, "desc" ]] // Sort by datetime column in descending order-->
+<!--      });-->
+
+<!--      $("tr[data-toggle='collapse']").click(function(){-->
+<!--        $(".collapse-row").collapse("hide");-->
+<!--        var targetId = $(this).attr("data-target");-->
+<!--        $(targetId).collapse("toggle");-->
+<!--      });-->
+<!--    });-->
+<!--  </script>-->
+<!--</body>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Emails for {{ receiver }}</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<style>
+    body {
+      margin: 0;
+    }
+    header {
+      position: fixed; /* Fixed header */
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000; /* Ensure header is on top */
+      background-color: #28a745; /* Light green header */
+      color: #fff;
+      padding: 15px 0; /* Larger padding */
+      text-align: center;
+    }
+    header .container {
+      max-width: 1200px; /* Set maximum width for header content */
+      margin: 0 auto; /* Center header content */
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header nav a {
+      color: #fff;
+      margin: 0 20px; /* Increase spacing between links */
+    }
+    .expand-content {
+      display: none;
+    }
+    .container {
+      margin-top: 100px; /* Add top margin to content */
+      margin-bottom: 50px; /* Add bottom margin to content */
+    }
+    footer {
+      background-color: #28a745; /* Light green footer */
+      color: #fff;
+      padding: 15px 0;
+      text-align: center;
+    }
+    footer a {
+      color: #fff;
+      margin: 0 20px; /* Increase spacing between links */
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="container">
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Contact</a>
+    </nav>
+  </div>
+</header>
+<div class="container">
+  <h1>Emails for {{ receiver }}</h1>
+  <div class="table-wrapper">
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>Received Time</th>
+          <th>Receiver</th>
+          <th>Subject</th>
+          <th>Sender</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for email in emails %}
+          <tr class="clickable-row" data-toggle="collapse" data-target="#row{{ loop.index }}" aria-expanded="false" aria-controls="row{{ loop.index }}">
+            <td>{{ email[1].received_time }}</td>
+            <td>{{ email[1].recipients }}</td>
+            <td>{{ email[1].subject }}</td>
+            <td>{{ email[1].sender }}</td>
+          </tr>
+          <tr id="row{{ loop.index }}" class="collapse expand-content">
+            <td colspan="4">
+              <div style="white-space: pre-line" >{{ email[1].content }}</div>
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+  $(document).ready(function(){
+    $('.clickable-row').click(function(){
+      $('.clickable-row').next('.expand-content').hide();
+      $(this).next('.expand-content').toggle();
+    });
+  });
+</script>
+
+</body>
+</html>
