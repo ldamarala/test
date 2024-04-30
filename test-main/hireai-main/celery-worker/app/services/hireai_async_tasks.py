@@ -20,7 +20,7 @@ from app.services.gpt import gpt_resume_parser, ai_interview_question_feedback, 
     build_interview_feedback_document, generate_interview_questions
 from app.services.talking_avatar import generate_video_with_ai_avatar, greeting_templates
 
-openai.api_key = settings.OPENAI_API_KEY
+openai.api_key = 'sk-proj-HMrYkFLTGD6LippfWAHyT3BlbkFJTYoEcCoOIShnJYi92PFn'
 
 
 async def parse_resume(job_application_id: str):

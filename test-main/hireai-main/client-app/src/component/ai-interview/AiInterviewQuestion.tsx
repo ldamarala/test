@@ -156,7 +156,8 @@ function AiInterviewQuestions(props) {
                       controls
                       width="100%"
                       height="100%"
-                      autoplay
+                      autoPlay
+                      playing={true}
                     />
                   </Grid>
                   <Grid item xs={6}>

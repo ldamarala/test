@@ -136,6 +136,7 @@ async def get_job_application_by_candidate_id(candidate_id: str,
         job_application = JobApplicationCandidateSchema(job=JobSchema.model_validate(job.__dict__),
                                                         **ja.__dict__)
         job_application.status = job_application_status_candidate_map.get(job_application.status, 'Processing')
+        job_application.time_created = ja.time_created
         job_applications_result.append(job_application)
     return job_applications_result
 

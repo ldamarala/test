@@ -117,7 +117,7 @@ export default function SignIn() {
         accessToken: token_response.access_token,
       });
       console.log(user)
-      if (['hiring_manager', 'admin', 'recruiter','user'].includes(user.role)) {
+      if (['hiring_manager', 'admin', 'recruiter'].includes(user.role)) {
         Setloading() 
         navigate('/admin');
       } else {

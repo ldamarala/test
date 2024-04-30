@@ -12,8 +12,8 @@ from app.models.job_application import JobApplication
 from app.models.user import User
 from app.services.pdf import PDF
 
-service_region = settings.MS_SPEECH_API_SERVICE_REGION
-subscription_key = settings.MS_SPEECH_API_SUBSCRIPTION_KEY
+service_region = 'eastus'
+subscription_key ="c15be443555943189f7b0b23189f123f"
 url_base = f"https://{service_region}.customvoice.api.speech.microsoft.com/api"
 
 
@@ -208,7 +208,7 @@ def generate_interview_questions(extracted_text):
     # Extracting only the assistant's responses
     assistant_responses = response['choices'][0]['message']['content']
     generated_questions = [message.strip()[3:] for message in assistant_responses.split('\n') if message]
-    return generated_questions[1:3]
+    return generated_questions[1:6]
 
 
 def ai_interview_feedback(ai_interview_request: str):

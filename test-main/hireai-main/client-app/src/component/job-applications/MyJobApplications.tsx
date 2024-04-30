@@ -37,9 +37,10 @@ import {
 } from '@mui/material';
 import Moment from 'react-moment';
 
-export default function MyJobApplications() {
+export default function MyJobApplications({filterdata}) {
   const { auth } = useAuth();
   const [jobApplications, setJobApplications] = useState([]);
+  const [filtereddata,setFilteredData]=useState([])
 
   useEffect(() => {
     const fetchMyJobApplications = async () => {
@@ -53,11 +54,27 @@ export default function MyJobApplications() {
         );
         let jobs_applications_retrieved = response.data;
         setJobApplications(jobs_applications_retrieved);
+        setFilteredData(jobs_applications_retrieved)
       }
     };
-
     fetchMyJobApplications();
-  }, []);
+
+    if (filterdata.searchkeyword.trim() !== '' || filterdata.location.trim() !== ''){
+      console.log(filterdata)
+      const searchkeyword = filterdata.searchkeyword.toLowerCase().trim();
+      const searchlocation = filterdata.location.toLowerCase().trim();
+    
+      const filtered = jobApplications.filter(item =>
+          item.title.toLowerCase().includes(searchkeyword) ||
+          item.job_locations.toLowerCase().includes(searchlocation)
+      );
+      console.log(filtered)
+      setFilteredData(filtered);
+  } else {
+     
+      setFilteredData(jobApplications);
+  }
+  }, [filterdata]);
   console.log(jobApplications) 
   return (
     <Container id="job-list" sx={{ width: '90%', py: { xs: 8, sm: 2 } }}>
@@ -69,7 +86,7 @@ export default function MyJobApplications() {
           spacing={2}
           useFlexGap
           sx={{ width: '100%', display: { xs: 'none', sm: 'flex' } }}></Stack>
-        {jobApplications.length === 0 ? (
+        {filtereddata.length === 0 ? (
           <Typography component="div">
             <Box sx={{ textAlign: 'justify', m: 1, fontSize: 18 }}>
               It looks like you haven't applied for any jobs yet. To explore
@@ -89,7 +106,7 @@ export default function MyJobApplications() {
                     <TableCell align="center">Status</TableCell>
                     <TableCell align="center">AI Optin</TableCell>
                     <TableCell align="center">Created</TableCell>
-                    <TableCell align="center">Updated</TableCell>
+                    <TableCell align="center">Applied On</TableCell>
                     <TableCell />
                   </TableRow>
                 </TableHead>
@@ -116,7 +133,7 @@ export default function MyJobApplications() {
                       </TableCell>
                       <TableCell align="center">
                         <Moment format="YYYY-MM-DD">
-                          {jobApplication.job.time_updated}
+                          {jobApplication.time_created}
                         </Moment>
                       </TableCell>
                       <TableCell align="center">

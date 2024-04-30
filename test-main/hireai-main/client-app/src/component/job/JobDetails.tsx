@@ -323,7 +323,7 @@ export default function JobDetails() {
                 variant="h5"
                 align="left"
                 sx={{ my: 0.5 }}>
-                Job Summery
+                Job Summary
               </Typography>
               <Typography
                 color="text.secondary"
@@ -390,6 +390,7 @@ export default function JobDetails() {
                             Upload Resume
                             <VisuallyHiddenInput
                               type="file"
+                              accept='.pdf'
                               onChange={handleFileChange}
                             />
                           </Button>

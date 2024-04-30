@@ -75,6 +75,8 @@ function AiInterviewWizard() {
                 width="80%"
                 height="80%"
                 autoPlay
+                playing={true}
+                loop={true}
                 volume={1}
                 muted={true}
               />
@@ -102,6 +104,7 @@ function AiInterviewWizard() {
                   volume={0.5}
                   muted={true}
                   autoPlay
+                  playing={true}
                 />
                 <Button variant="contained" href="/">
                   Close

@@ -1,5 +1,5 @@
 from pydantic import BaseModel, ConfigDict
-
+from datetime import datetime
 from app.api.v1.schemas.job import JobSchema
 from app.api.v1.schemas.user import UserSchema
 from app.models.user import User
@@ -41,3 +41,4 @@ class JobApplicationCandidateSchema(JobApplicationSchemaBase):
     id: str
     job: JobSchema
     interview_link: str | None = None
+    time_created : datetime | None = None
