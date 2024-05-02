@@ -69,7 +69,7 @@ export default function JobCard(props: { jobDetails: Job }) {
  <Typography color="text.primary" variant="body2" fontWeight="bold">
  {jobDetails.title}
  </Typography>
- <Typography color="text.secondary" variant="body2" sx={{ my: 0.5 }}>
+ <Typography color="text.secondary" variant="body2" sx={{ my: 0.5 }} >
  {jobDetails.summary}
  </Typography>
  <JobDetailsPreview

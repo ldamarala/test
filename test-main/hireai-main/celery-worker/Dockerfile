@@ -8,6 +8,7 @@ RUN apt update && apt install -y libsm6 libxext6 ffmpeg libfontconfig1 libxrende
 
 RUN pip install -r requirements.txt
 
+RUN pip install python-dotenv
 #RUN pip install -r requirements.txt \
 #    && rm -rf /root/.cache/pip
 

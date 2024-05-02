@@ -41,6 +41,7 @@ export default function JobList({filterdata}) {
  
     setJobs(jobs_retrieved);
     setFilteredData(jobs_retrieved)
+    console.log(jobs_retrieved)
   };
 
   useEffect(() => {
@@ -50,19 +51,18 @@ export default function JobList({filterdata}) {
 
   
   useEffect(() => {
-    if (filterdata.searchkeyword.trim() !== '' || filterdata.location.trim() !== ''){
+    if (filterdata.searchkeyword.trim() !== '' && filterdata.location.trim() !== ''){
         console.log(filterdata)
         const searchkeyword = filterdata.searchkeyword.toLowerCase().trim();
         const searchlocation = filterdata.location.toLowerCase().trim();
       
         const filtered = jobs.filter(item =>
-            item.title.toLowerCase().includes(searchkeyword) ||
+            item.title.toLowerCase().includes(searchkeyword) &&
             item.job_locations.toLowerCase().includes(searchlocation)
         );
         console.log(filtered)
         setFilteredData(filtered);
     } else {
-        console.log(filteredData)
         setFilteredData(jobs);
     }
 }, [filterdata.searchkeyword,filterdata.location]);

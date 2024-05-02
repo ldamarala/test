@@ -15,6 +15,9 @@ class JobSchemaBase(BaseModel):
     requirements: str | None = None
     key_competencies: str | None = None
     job_locations: str | None = None
+    salary:str|None=None
+    open_positions:str|None=None
+    job_nature:str|None=None
     hiring_manager_id: str | None = None
     recruiter_id: str | None = None
     inactive: bool | None = None

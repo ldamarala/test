@@ -36,10 +36,10 @@ import { unix } from 'moment';
 export default function JobSearch(props) {
   const [keyword, setKeyword] = React.useState('');
   const [location, setLocation] = React.useState('');
-
-  const submitteddata= {
-    searchkeyword:keyword,
-    location:location,
+  console.log(props)
+  const submitteddata = {
+    searchkeyword: keyword,
+    location: location,
   }
 
   const changekeyword = (event) => {
@@ -50,34 +50,35 @@ export default function JobSearch(props) {
     setLocation(event.target.value)
   };
 
-  
-  const handlesubmit = () =>{
-     props.searchdata(submitteddata)
+
+  const handlesubmit = () => {
+    props.searchdata(submitteddata)
   };
 
   const { auth } = useAuth();
   const [jobs, setJobs] = React.useState([]);
-  const [locations,setLocations]=React.useState([])
+  const [locations, setLocations] = React.useState([])
 
   const fetchJobs = async () => {
     const config = {};
     const response = await axios_job.get(API_PATHS.JOB_ALL, config);
     let jobs_retrieved = response.data;
- 
+
     setJobs(jobs_retrieved);
     console.log(jobs_retrieved)
     const uniqueLocations = [];
-    jobs_retrieved.map((item)=>{
+    jobs_retrieved.map((item) => {
       (item.job_locations).split(",").forEach((element => {
-          if (! (element in uniqueLocations)){ 
-          uniqueLocations.push(element)}
-          console.log(uniqueLocations)
-       }));
+        if (!(element in uniqueLocations)) {
+          uniqueLocations.push(element)
+        }
+        // console.log(uniqueLocations)
+      }));
     })
     setLocations(uniqueLocations);
   };
 
- 
+
   React.useEffect(() => {
     fetchJobs();
   }, []);
@@ -87,7 +88,7 @@ export default function JobSearch(props) {
       <Box
         sx={(theme) => ({
           width: '100%',
-          fontFamily:"inherit",
+          fontFamily: "inherit",
           // backgroundImage:
           //   theme.palette.mode === 'light'
           //     ? 'linear-gradient(180deg, #CEE5FD, #FFF)'
@@ -96,8 +97,8 @@ export default function JobSearch(props) {
           backgroundRepeat: 'no-repeat',
           pt: { xs: 5, sm: 5 },
           pb: { xs: 5, sm: 5 },
-          marginBottom:10,
-          marginTop:10
+          marginBottom: 10,
+          marginTop: 10
         })}>
         <Container
           sx={{
@@ -135,14 +136,11 @@ export default function JobSearch(props) {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   onChange={Changelocation}
-                  value={location} 
+                  value={location}
                   label="Location">
-                   {locations.map((loc, index) => (
-    <MenuItem key={index} value={loc}>{loc}</MenuItem>
-  ))}
-                  {/* <MenuItem value={'NY'}>New York</MenuItem>
-                  <MenuItem value={'PIT'}>Pittsburgh</MenuItem>
-                  <MenuItem value={'SEA'}>Seattle</MenuItem> */}
+                  {locations.map((loc, index) => (
+                    <MenuItem key={index} value={loc}>{loc}</MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>

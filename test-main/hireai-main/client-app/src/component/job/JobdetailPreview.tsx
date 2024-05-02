@@ -112,12 +112,12 @@ export default function JobDetailsPreview(props) {
             />
          </Link>
          <Modal
-            sx={{ overflowY: 'scroll', maxHeight: '100%', width: '100%', paddingTop:''}}
+            sx={{ overflowY: 'scroll', maxHeight: '100%', width: '100%'}}
             open={open}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description">
-            <Stack sx={{ ...style, pt: 15, pb: 2 }}>
+            <Stack sx={{ ...style, pt: 15, pb: 2,mt:10 }}>
                <Container id="job-details" sx={{ py: { xs: 8, sm: 16 } }}>
                   <Grid container spacing={3}>
                      <Grid item xs={1.5}>
@@ -317,6 +317,7 @@ export default function JobDetailsPreview(props) {
                                  color="text.secondary"
                                  variant="h5"
                                  align="left"
+                                 style={{fontWeight:10}}
                                  sx={{ my: 0.5 }}>
                                  Job Summery
                               </Typography>
@@ -333,21 +334,21 @@ export default function JobDetailsPreview(props) {
                                  variant="h6"
                                  align="left"
                                  sx={{ my: 0.5 }}>
-                                 Open positions: 3
+                                 Open positions: {jobDetails.open_positions}
                               </Typography>
                               <Typography
                                  color="text.secondary"
                                  variant="h6"
                                  align="left"
                                  sx={{ my: 0.5 }}>
-                                 Salary: 100k - 150k
+                                 Salary: {jobDetails.salary}
                               </Typography>
                               <Typography
                                  color="text.secondary"
                                  variant="h6"
                                  align="left"
                                  sx={{ my: 0.5 }}>
-                                 Job Nature: Full-time
+                                 Job Nature: {jobDetails.job_nature}
                               </Typography>
                            </Stack>
                         </Card>

@@ -19,9 +19,11 @@ from app.models.user import User
 from app.services.gpt import gpt_resume_parser, ai_interview_question_feedback, ai_interview_feedback, \
     build_interview_feedback_document, generate_interview_questions
 from app.services.talking_avatar import generate_video_with_ai_avatar, greeting_templates
+import os
+from dotenv import load_dotenv, find_dotenv
+_ = load_dotenv(find_dotenv())
 
-openai.api_key = 'sk-proj-HMrYkFLTGD6LippfWAHyT3BlbkFJTYoEcCoOIShnJYi92PFn'
-
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 async def parse_resume(job_application_id: str):
     async with sessionmanager.session() as db:

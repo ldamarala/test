@@ -8,6 +8,7 @@ class LoginRequest(BaseModel):
 class SignupRequest(BaseModel):
     firstname:str
     lastname:str
+    username:str
     email:str
     password:str = Field(...,min_length=1,max_length=32)
 

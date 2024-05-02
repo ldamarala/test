@@ -6,11 +6,14 @@ import aiohttp
 from aiohttp import ClientSession
 
 from app.core.config import settings
+import os
+from dotenv import load_dotenv, find_dotenv
+_ = load_dotenv(find_dotenv())
 
-region = "eastus"
-subscription_key = "c15be443555943189f7b0b23189f123f"
+region = os.getenv("MS_SPEECH_API_SERVICE_REGION")
+subscription_key = os.getenv("MS_SPEECH_API_SUBSCRIPTION_KEY")
 url_base = f"https://{region}.customvoice.api.speech.microsoft.com/api"
-output_directory = '/src/app/uploads/videos'
+output_directory = os.getenv("VIDEO_OUTPUT_DIRECTORY")
 SAMPLE_RATE = 16000
 
 

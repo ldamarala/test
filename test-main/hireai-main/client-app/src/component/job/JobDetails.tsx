@@ -120,8 +120,10 @@ export default function JobDetails() {
 
   useEffect(() => {
     fetchJobById();
+    console.log()
   }, [auth]);
 
+  console.log(jobDetails)
   return (
     <Container id="job-details" sx={{ py: { xs: 8, sm: 16 } }}>
       <Grid container spacing={3}>
@@ -338,21 +340,21 @@ export default function JobDetails() {
                 variant="h6"
                 align="left"
                 sx={{ my: 0.5 }}>
-                Open positions: 3
+                Open positions: {jobDetails?.open_positions}
               </Typography>
               <Typography
                 color="text.secondary"
                 variant="h6"
                 align="left"
                 sx={{ my: 0.5 }}>
-                Salary: 100k - 150k
+                Salary: {jobDetails?.salary}
               </Typography>
               <Typography
                 color="text.secondary"
                 variant="h6"
                 align="left"
                 sx={{ my: 0.5 }}>
-                Job Nature: Full-time
+                Job Nature:{jobDetails?.job_nature}
               </Typography>
             </Stack>
           </Card>

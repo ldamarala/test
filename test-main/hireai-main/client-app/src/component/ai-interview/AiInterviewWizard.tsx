@@ -74,11 +74,11 @@ function AiInterviewWizard() {
                 controls
                 width="80%"
                 height="80%"
+                volume={0.5}
                 autoPlay
-                playing={true}
-                loop={true}
-                volume={1}
                 muted={true}
+                playing={true}
+                loop
               />
               <Button variant="contained" onClick={initiateInterview}>
                 Start Interview

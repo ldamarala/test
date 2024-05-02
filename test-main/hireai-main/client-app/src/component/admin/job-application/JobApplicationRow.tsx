@@ -237,12 +237,12 @@ function JobApplicationRow(props: { jobApplication: any }) {
         </TableCell>
         <TableCell align="center">
           <Moment format="YYYY-MM-DD HH:mm">
-            {jobApplication.time_created}
+            {jobApplication.job.time_created}
           </Moment>
         </TableCell>
         <TableCell align="center">
           <Moment format="YYYY-MM-DD HH:mm">
-            {jobApplication.time_updated}
+            {jobApplication.job.time_updated}
           </Moment>
         </TableCell>
         <TableCell align="center">
