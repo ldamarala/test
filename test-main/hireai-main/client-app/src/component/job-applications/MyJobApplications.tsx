@@ -41,41 +41,42 @@ export default function MyJobApplications({filterdata}) {
   const { auth } = useAuth();
   const [jobApplications, setJobApplications] = useState([]);
   const [filtereddata,setFilteredData]=useState([])
+  const fetchMyJobApplications = async () => {
+    if (auth && auth.accessToken) {
+      const config = {
+        headers: { Authorization: `Bearer ${auth.accessToken}` },
+      };
+      const response = await axios_job.get(
+        formatString(API_PATHS.JOB_APPLICATION_BY_CANDIDATE_ID, auth.id),
+        config
+      );
+      let jobs_applications_retrieved = response.data;
+      setJobApplications(jobs_applications_retrieved);
+      setFilteredData(jobs_applications_retrieved)
+    }
+  };
+  
+  useEffect(() => {
+    fetchMyJobApplications();
+  }, []);
 
   useEffect(() => {
-    const fetchMyJobApplications = async () => {
-      if (auth && auth.accessToken) {
-        const config = {
-          headers: { Authorization: `Bearer ${auth.accessToken}` },
-        };
-        const response = await axios_job.get(
-          formatString(API_PATHS.JOB_APPLICATION_BY_CANDIDATE_ID, auth.id),
-          config
-        );
-        let jobs_applications_retrieved = response.data;
-        setJobApplications(jobs_applications_retrieved);
-        setFilteredData(jobs_applications_retrieved)
+      if (filterdata.searchkeyword.trim() !== '' && filterdata.location.trim() !== ''){
+          console.log(filterdata)
+          const searchkeyword = filterdata.searchkeyword.toLowerCase().trim();
+          const searchlocation = filterdata.location.toLowerCase().trim();
+        
+          const filtered = jobApplications.filter(item =>
+              item.job.title.toLowerCase().includes(searchkeyword) &&
+              item.job.job_locations.toLowerCase().includes(searchlocation)
+          );
+          console.log(filtered)
+          setFilteredData(filtered);
+      } else {
+          setFilteredData(jobApplications);
       }
-    };
-    fetchMyJobApplications();
-
-    if (filterdata.searchkeyword.trim() !== '' || filterdata.location.trim() !== ''){
-      console.log(filterdata)
-      const searchkeyword = filterdata.searchkeyword.toLowerCase().trim();
-      const searchlocation = filterdata.location.toLowerCase().trim();
-    
-      const filtered = jobApplications.filter(item =>
-          item.title.toLowerCase().includes(searchkeyword) ||
-          item.job_locations.toLowerCase().includes(searchlocation)
-      );
-      console.log(filtered)
-      setFilteredData(filtered);
-  } else {
-     
-      setFilteredData(jobApplications);
-  }
   }, [filterdata]);
-  console.log(jobApplications) 
+
   return (
     <Container id="job-list" sx={{ width: '90%', py: { xs: 8, sm: 2 } }}>
       <Grid item xs={12} md={6}>
@@ -86,7 +87,7 @@ export default function MyJobApplications({filterdata}) {
           spacing={2}
           useFlexGap
           sx={{ width: '100%', display: { xs: 'none', sm: 'flex' } }}></Stack>
-        {filtereddata.length === 0 ? (
+        {jobApplications.length === 0 ? (
           <Typography component="div">
             <Box sx={{ textAlign: 'justify', m: 1, fontSize: 18 }}>
               It looks like you haven't applied for any jobs yet. To explore
@@ -111,9 +112,10 @@ export default function MyJobApplications({filterdata}) {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {jobApplications.map((jobApplication) => (
+                  {filtereddata.map((jobApplication) => (
                     <TableRow
-                      sx={{
+                       key={jobApplication.id}
+                       sx={{
                         '& > *': { borderBottom: 'unset' },
                         backgroundColor: 'background.paper',
                       }}>
@@ -127,12 +129,12 @@ export default function MyJobApplications({filterdata}) {
                         {jobApplication.ai_interview_optin ? 'Yes' : 'No'}
                       </TableCell>
                       <TableCell align="center">
-                        <Moment format="YYYY-MM-DD">
+                        <Moment format="DD-MM-YYYY">
                           {jobApplication.job.time_created}
                         </Moment>
                       </TableCell>
                       <TableCell align="center">
-                        <Moment format="YYYY-MM-DD">
+                        <Moment format="DD-MM-YYYY">
                           {jobApplication.time_created}
                         </Moment>
                       </TableCell>

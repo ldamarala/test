@@ -73,6 +73,7 @@ export default function SignUp() {
   const formdata = {
     firstname: fname,
     lastname: sname,
+    username:uname,
     email: email,
     password: password
 

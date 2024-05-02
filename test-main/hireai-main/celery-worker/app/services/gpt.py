@@ -11,9 +11,12 @@ from app.models.ai_interview_question import AiInterviewQuestion
 from app.models.job_application import JobApplication
 from app.models.user import User
 from app.services.pdf import PDF
+import os
+from dotenv import load_dotenv, find_dotenv
+_ = load_dotenv(find_dotenv())
 
-service_region = 'eastus'
-subscription_key ="c15be443555943189f7b0b23189f123f"
+service_region = os.getenv("MS_SPEECH_API_SERVICE_REGION")
+subscription_key = os.getenv("MS_SPEECH_API_SUBSCRIPTION_KEY")
 url_base = f"https://{service_region}.customvoice.api.speech.microsoft.com/api"
 
 

@@ -53,7 +53,7 @@ async def create_new_user(
         
         if not user:
             user = User(id=str(uuid4()), firstname=details.firstname, lastname=details.lastname,
-                        username=f"{details.firstname} {details.lastname}", 
+                        username=details.username, 
                         email=details.email, role=role,
                         disabled=False, 
                         hashed_password=hashpassword)

@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   FormControl,
   Grid,
@@ -37,10 +37,10 @@ export default function JobApplicationsearch(props) {
   const [keyword, setKeyword] = React.useState('');
   const [location, setLocation] = React.useState('');
   const [jobApplications, setJobApplications] = useState([]);
-  const [locations,setLocations]=useState([])
-  const submitteddata= {
-    searchkeyword:keyword,
-    location:location,
+  const [locations, setLocations] = useState([])
+  const submitteddata = {
+    searchkeyword: keyword,
+    location: location,
   }
 
   const changekeyword = (event) => {
@@ -51,11 +51,11 @@ export default function JobApplicationsearch(props) {
     setLocation(event.target.value)
   };
 
-  
-  const handlesubmit = () =>{
-     props.searchapplicationdata(submitteddata)
+
+  const handlesubmit = () => {
+    props.searchapplicationdata(submitteddata)
   };
-  
+
   useEffect(() => {
     const fetchMyJobApplications = async () => {
       if (auth && auth.accessToken) {
@@ -69,18 +69,19 @@ export default function JobApplicationsearch(props) {
         let jobs_applications_retrieved = response.data;
         setJobApplications(jobs_applications_retrieved);
 
-        const uniqueLocations = [];
-    jobApplications.map((item)=>{
-      (item.job.job_locations).split(",").forEach((element => {
-          if (! (element in uniqueLocations)){ 
-          uniqueLocations.push(element)}
-          console.log(uniqueLocations)
-       }));
-    })
-    setLocations(uniqueLocations);
+        const uniqueLocations = [""];
+        jobApplications.map((item) => {
+          (item.job.job_locations).split(",").forEach((element => {
+            if (!(element in uniqueLocations)) {
+              uniqueLocations.push(element)
+            }
+          }));
+        })
+        setLocations(uniqueLocations);
       }
     };
-    fetchMyJobApplications();})
+    fetchMyJobApplications();
+  })
 
   return (
     <Container id="job-search">
@@ -90,8 +91,8 @@ export default function JobApplicationsearch(props) {
           backgroundRepeat: 'no-repeat',
           pt: { xs: 5, sm: 5 },
           pb: { xs: 5, sm: 5 },
-          marginBottom:10,
-          marginTop:10
+          marginBottom: 10,
+          marginTop: 10
         })}>
         <Container
           sx={{
@@ -129,12 +130,11 @@ export default function JobApplicationsearch(props) {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   onChange={Changelocation}
-                  value={location} 
+                  value={location}
                   label="Location">
-                  
-                   {locations.map((loc, index) => (
-    <MenuItem key={index} value={loc}>{loc}</MenuItem>
-  ))}
+                  {locations.map((loc, index) => (
+                    <MenuItem key={index} value={loc}>{loc}</MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>

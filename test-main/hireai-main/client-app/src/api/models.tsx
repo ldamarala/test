@@ -58,6 +58,9 @@ export interface Job {
   hiring_manager_id: string;
   inactive: boolean;
   job_locations: string;
+  salary:string,
+  open_positions:string,
+  job_nature:string,
   key_competencies: string;
   qualifications: string;
   recruiter_id: string;

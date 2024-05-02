@@ -145,8 +145,8 @@ export default function CandidatePage() {
  <CssBaseline />
  <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
  <Container sx={{ bgcolor: 'background.default', py: { xs: 8, sm: 18 } }}>
- {value === 0 && <JobApplicationsearch filterdata={searchApplicationkeywords}/>}
- {value === 1 && <JobSearch filterdata={searchkeywords} />}
+ {value === 0 && <JobApplicationsearch searchapplicationdata={searchapplicationdata}/>}
+ {value === 1 && <JobSearch searchdata={searchdata} />}
  {auth && auth.accessToken ? (
  <>
  <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
