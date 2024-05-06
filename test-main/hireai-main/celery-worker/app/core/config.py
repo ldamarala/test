@@ -30,11 +30,11 @@ class Settings(BaseSettings):
 
     ENCODING: str = 'utf-8'
 
-    # OPENAI_API_KEY: str
-    # MS_SPEECH_API_SERVICE_REGION: str
-    # MS_SPEECH_API_SUBSCRIPTION_KEY: str
+    OPENAI_API_KEY: str
+    MS_SPEECH_API_SERVICE_REGION: str
+    MS_SPEECH_API_SUBSCRIPTION_KEY: str
 
-    # VIDEO_OUTPUT_DIRECTORY: str
+    VIDEO_OUTPUT_DIRECTORY: str
 
     model_config = SettingsConfigDict(env_file=env_files, extra='ignore')
 

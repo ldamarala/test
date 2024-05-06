@@ -14,7 +14,6 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useAuth } from '../../context';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ClipLoader } from 'react-spinners';
 import {
   axios_auth,
   axios_job,
@@ -67,28 +66,13 @@ export default function SignIn() {
   const { setAuth } = useAuth();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
-  const [username,setUsername] = useState('')
-  const [password,setPassword] = useState('')
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false)
   const userRef = useRef<HTMLInputElement>(null);
   const errRef = useRef<HTMLParagraphElement>(null);
-  
-  
-  
-  const Setloading =()=>{
-    setTimeout(() => {
-      setLoading(false)
-    }, 1000)
-  }
-
-  const alertmessage=()=>{
-    alert(errorMessage)
-  }
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setLoading(true) 
+
     try {
       const formdata = new FormData(event.currentTarget);
       const response = await axios_auth.post(
@@ -116,16 +100,12 @@ export default function SignIn() {
         roles: [user.role],
         accessToken: token_response.access_token,
       });
-      console.log(user)
-      if (['hiring_manager', 'admin', 'recruiter'].includes(user.role)) {
-        Setloading() 
+      if (['hiring_manager', 'admin', 'recruiter',].includes(user.role)) {
         navigate('/admin');
       } else {
-        Setloading()
         navigate('/');
       }
     } catch (err) {
-      Setloading() 
       if (!err?.response) {
         setErrorMessage('No Server Response');
       } else if (err.response?.status === 400) {
@@ -136,7 +116,6 @@ export default function SignIn() {
         setErrorMessage('Login Failed');
       }
       if (errRef.current) errRef.current.focus();
-      alertmessage()
     }
   };
 
@@ -155,7 +134,7 @@ export default function SignIn() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Log in 
+            Sign in
           </Typography>
           <Box
             component="form"
@@ -192,7 +171,7 @@ export default function SignIn() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}>
-              Log In <ClipLoader color="#fffff" size='15px' loading={loading} />
+              Sign In
             </Button>
             <Grid container>
               <Grid item xs>
@@ -201,7 +180,7 @@ export default function SignIn() {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/signup" variant="body2">
+                <Link href="#" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

@@ -8,22 +8,10 @@ import JobDetailsPage from './pages/JobDetailsPage';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import AiInterviewPage from './pages/AiInterviewPage';
 import PrivateRoute from './component/PrivateRoute';
-import { Global, css } from '@emotion/react';
-const GlobalStyles = () => (
-  <Global
-      styles={css`
-    /* Apply global styles */
-    body {
-      font-family:Roboto;
-    }
-  `}
-  />
-);
 
 function App() {
   return (
-    <div className="apps" style={{fontFamily:'Roboto !important'}}>
-      <GlobalStyles />
+    <div className="App">
       <AuthProvider>
         <BrowserRouter>
           <Routes>

@@ -71,7 +71,7 @@ async def create_job(job: JobSchemaCreate,
                      request: Request,
                      db: AsyncSession = Depends(get_db)):
     job_id = uuid4().hex
-    new_job = Job(id=job_id, **job.dict())
+    new_job = Job(id=job_id, **job.__dict__)
     db.add(new_job)
     await db.commit()
     await db.refresh(new_job)

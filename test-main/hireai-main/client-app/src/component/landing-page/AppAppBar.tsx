@@ -86,7 +86,7 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
         boxShadow: 0,
         bgcolor: 'transparent',
         backgroundImage: 'none',
-        mt: 4,
+        mt: 2,
       }}>
       <Container maxWidth="lg">
         <Toolbar

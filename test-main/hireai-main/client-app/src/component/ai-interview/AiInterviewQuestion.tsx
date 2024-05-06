@@ -139,7 +139,7 @@ function AiInterviewQuestions(props) {
 
   return (
     <div>
-      <div className="job_listing_area" >
+      <div className="job_listing_area">
         <div className="container">
           <div className="job_lists">
             {aiInterview &&
@@ -156,8 +156,6 @@ function AiInterviewQuestions(props) {
                       controls
                       width="100%"
                       height="100%"
-                      autoPlay
-                      playing={true}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -218,7 +216,7 @@ function AiInterviewQuestions(props) {
               </>
             ) : (
               <>
-                <div style={{marginTop:50}}>
+                <div>
                   Thank you for completing all the interview questions! Your
                   responses are now being processed by our team. We appreciate
                   your time and interest in joining us. Please click the
@@ -230,8 +228,7 @@ function AiInterviewQuestions(props) {
                 <Button
                   variant="contained"
                   color="success"
-                  onClick={submitAllInterview}
-                  style={{marginTop:20,marginBottom:190}}>
+                  onClick={submitAllInterview}>
                   Finish
                 </Button>
               </>

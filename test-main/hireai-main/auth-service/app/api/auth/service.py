@@ -37,9 +37,9 @@ class AuthService:
 
         return await self.create_token_data_from_user(user)
     
-    async def signup(self,signup_request:SignupRequest, db: AsyncSession):
-        
-        return await ('signed up succesful')
+    # async def signup(self,signup_request:SignupRequest, db: AsyncSession):
+    #     user: User = (await db.execute( insert(User).values([{'firstname':signup_request.firstname,'lastname':signup_request.lastname,'email':signup_request.email,'password':hash_password(signup_request.password)}])))
+    #     return await ('signed up succesful')
 
     # async def signup(self,signup_request:SignupRequest,db:AssertionError):
     #       user: User = await(await db.execute(select(User).where(User.email == SignupRequest.email or User.firstname == SignupRequest.firstname)))

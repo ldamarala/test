@@ -37,45 +37,27 @@ import {
 } from '@mui/material';
 import Moment from 'react-moment';
 
-export default function MyJobApplications({filterdata}) {
+export default function MyJobApplications() {
   const { auth } = useAuth();
   const [jobApplications, setJobApplications] = useState([]);
-  const [filtereddata,setFilteredData]=useState([])
-  const fetchMyJobApplications = async () => {
-    if (auth && auth.accessToken) {
-      const config = {
-        headers: { Authorization: `Bearer ${auth.accessToken}` },
-      };
-      const response = await axios_job.get(
-        formatString(API_PATHS.JOB_APPLICATION_BY_CANDIDATE_ID, auth.id),
-        config
-      );
-      let jobs_applications_retrieved = response.data;
-      setJobApplications(jobs_applications_retrieved);
-      setFilteredData(jobs_applications_retrieved)
-    }
-  };
-  
-  useEffect(() => {
-    fetchMyJobApplications();
-  }, []);
 
   useEffect(() => {
-      if (filterdata.searchkeyword.trim() !== '' && filterdata.location.trim() !== ''){
-          console.log(filterdata)
-          const searchkeyword = filterdata.searchkeyword.toLowerCase().trim();
-          const searchlocation = filterdata.location.toLowerCase().trim();
-        
-          const filtered = jobApplications.filter(item =>
-              item.job.title.toLowerCase().includes(searchkeyword) &&
-              item.job.job_locations.toLowerCase().includes(searchlocation)
-          );
-          console.log(filtered)
-          setFilteredData(filtered);
-      } else {
-          setFilteredData(jobApplications);
+    const fetchMyJobApplications = async () => {
+      if (auth && auth.accessToken) {
+        const config = {
+          headers: { Authorization: `Bearer ${auth.accessToken}` },
+        };
+        const response = await axios_job.get(
+          formatString(API_PATHS.JOB_APPLICATION_BY_CANDIDATE_ID, auth.id),
+          config
+        );
+        let jobs_applications_retrieved = response.data;
+        setJobApplications(jobs_applications_retrieved);
       }
-  }, [filterdata]);
+    };
+
+    fetchMyJobApplications();
+  }, []);
 
   return (
     <Container id="job-list" sx={{ width: '90%', py: { xs: 8, sm: 2 } }}>
@@ -107,15 +89,14 @@ export default function MyJobApplications({filterdata}) {
                     <TableCell align="center">Status</TableCell>
                     <TableCell align="center">AI Optin</TableCell>
                     <TableCell align="center">Created</TableCell>
-                    <TableCell align="center">Applied On</TableCell>
+                    <TableCell align="center">Updated</TableCell>
                     <TableCell />
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {filtereddata.map((jobApplication) => (
+                  {jobApplications.map((jobApplication) => (
                     <TableRow
-                       key={jobApplication.id}
-                       sx={{
+                      sx={{
                         '& > *': { borderBottom: 'unset' },
                         backgroundColor: 'background.paper',
                       }}>
@@ -129,13 +110,13 @@ export default function MyJobApplications({filterdata}) {
                         {jobApplication.ai_interview_optin ? 'Yes' : 'No'}
                       </TableCell>
                       <TableCell align="center">
-                        <Moment format="DD-MM-YYYY">
-                          {jobApplication.job.time_created}
+                        <Moment format="YYYY-MM-DD">
+                          {jobApplication.time_created}
                         </Moment>
                       </TableCell>
                       <TableCell align="center">
-                        <Moment format="DD-MM-YYYY">
-                          {jobApplication.time_created}
+                        <Moment format="YYYY-MM-DD">
+                          {jobApplication.time_updated}
                         </Moment>
                       </TableCell>
                       <TableCell align="center">

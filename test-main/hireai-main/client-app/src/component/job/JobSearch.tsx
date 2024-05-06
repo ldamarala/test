@@ -14,32 +14,14 @@ import Link from '@mui/material/Link';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { useAuth } from '../../context';
-import {
-  axios_auth,
-  axios_job,
-  axios_ai_interview,
-  APP_HOST_BASE_PATH,
-  AUTH_API_GATEWAY_HOST,
-  JOB_API_GATEWAY_HOST,
-  INTERVIEW_API_GATEWAY_HOST,
-  STATIC_CONTENT_GATEWAY_HOST,
-  API_PATHS,
-  formatString,
-} from '../../api/axios';
-import { isTemplateExpression } from 'typescript';
-import { unix } from 'moment';
-
-
-
 
 export default function JobSearch(props) {
   const [keyword, setKeyword] = React.useState('');
   const [location, setLocation] = React.useState('');
-  console.log(props)
-  const submitteddata = {
-    searchkeyword: keyword,
-    location: location,
+
+  const submitteddata= {
+    searchkeyword:keyword,
+    location:location,
   }
 
   const changekeyword = (event) => {
@@ -50,55 +32,25 @@ export default function JobSearch(props) {
     setLocation(event.target.value)
   };
 
-
-  const handlesubmit = () => {
-    props.searchdata(submitteddata)
+  
+  const handlesubmit = () =>{
+     props.searchdata(submitteddata)
   };
-
-  const { auth } = useAuth();
-  const [jobs, setJobs] = React.useState([]);
-  const [locations, setLocations] = React.useState([])
-
-  const fetchJobs = async () => {
-    const config = {};
-    const response = await axios_job.get(API_PATHS.JOB_ALL, config);
-    let jobs_retrieved = response.data;
-
-    setJobs(jobs_retrieved);
-    console.log(jobs_retrieved)
-    const uniqueLocations = [];
-    jobs_retrieved.map((item) => {
-      (item.job_locations).split(",").forEach((element => {
-        if (!(element in uniqueLocations)) {
-          uniqueLocations.push(element)
-        }
-        // console.log(uniqueLocations)
-      }));
-    })
-    setLocations(uniqueLocations);
-  };
-
-
-  React.useEffect(() => {
-    fetchJobs();
-  }, []);
 
   return (
     <Container id="job-search">
       <Box
         sx={(theme) => ({
           width: '100%',
-          fontFamily: "inherit",
+
           // backgroundImage:
           //   theme.palette.mode === 'light'
           //     ? 'linear-gradient(180deg, #CEE5FD, #FFF)'
           //     : `linear-gradient(#02294F, ${alpha('#090E10', 0.0)})`,
           // backgroundSize: '100% 20%',
           backgroundRepeat: 'no-repeat',
-          pt: { xs: 5, sm: 5 },
-          pb: { xs: 5, sm: 5 },
-          marginBottom: 10,
-          marginTop: 10
+          pt: { xs: 14, sm: 5 },
+          pb: { xs: 8, sm: 5 },
         })}>
         <Container
           sx={{
@@ -107,8 +59,8 @@ export default function JobSearch(props) {
             alignItems: 'center',
             border: 1,
             p: 0,
-            pt: 2,
-            pb: 2,
+            pt: 6,
+            pb: 5,
             borderColor: 'grey.500',
             borderRadius: '16px',
           }}>
@@ -136,11 +88,11 @@ export default function JobSearch(props) {
                   labelId="demo-simple-select-label"
                   id="demo-simple-select"
                   onChange={Changelocation}
-                  value={location}
+                  value={location} 
                   label="Location">
-                  {locations.map((loc, index) => (
-                    <MenuItem key={index} value={loc}>{loc}</MenuItem>
-                  ))}
+                  <MenuItem value={'NY'}>New York</MenuItem>
+                  <MenuItem value={'PIT'}>Pittsburgh</MenuItem>
+                  <MenuItem value={'SEA'}>Seattle</MenuItem>
                 </Select>
               </FormControl>
             </Grid>

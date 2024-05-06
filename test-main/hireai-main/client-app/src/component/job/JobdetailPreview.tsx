@@ -45,6 +45,18 @@ const style = {
    p: 4,
 };
 
+const VisuallyHiddenInput = styled('input')({
+   clip: 'rect(0 0 0 0)',
+   clipPath: 'inset(50%)',
+   height: 1,
+   overflow: 'hidden',
+   position: 'absolute',
+   bottom: 0,
+   left: 0,
+   whiteSpace: 'nowrap',
+   width: 1,
+});
+
 export default function JobDetailsPreview(props) {
    const { auth } = useAuth();
 
@@ -112,12 +124,12 @@ export default function JobDetailsPreview(props) {
             />
          </Link>
          <Modal
-            sx={{ overflowY: 'scroll', maxHeight: '100%', width: '100%'}}
+            sx={{ overflowY: 'scroll', maxHeight: '100%', width: '100%', padding:'10' }}
             open={open}
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description">
-            <Stack sx={{ ...style, pt: 15, pb: 2,mt:10 }}>
+            <Stack sx={{ ...style, pt: 65, pb: 2 }}>
                <Container id="job-details" sx={{ py: { xs: 8, sm: 16 } }}>
                   <Grid container spacing={3}>
                      <Grid item xs={1.5}>
@@ -317,7 +329,6 @@ export default function JobDetailsPreview(props) {
                                  color="text.secondary"
                                  variant="h5"
                                  align="left"
-                                 style={{fontWeight:10}}
                                  sx={{ my: 0.5 }}>
                                  Job Summery
                               </Typography>
@@ -334,21 +345,21 @@ export default function JobDetailsPreview(props) {
                                  variant="h6"
                                  align="left"
                                  sx={{ my: 0.5 }}>
-                                 Open positions: {jobDetails.open_positions}
+                                 Open positions: 3
                               </Typography>
                               <Typography
                                  color="text.secondary"
                                  variant="h6"
                                  align="left"
                                  sx={{ my: 0.5 }}>
-                                 Salary: {jobDetails.salary}
+                                 Salary: 100k - 150k
                               </Typography>
                               <Typography
                                  color="text.secondary"
                                  variant="h6"
                                  align="left"
                                  sx={{ my: 0.5 }}>
-                                 Job Nature: {jobDetails.job_nature}
+                                 Job Nature: Full-time
                               </Typography>
                            </Stack>
                         </Card>

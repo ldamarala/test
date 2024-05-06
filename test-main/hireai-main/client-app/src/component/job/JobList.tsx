@@ -32,42 +32,34 @@ import { config } from 'process';
 export default function JobList({filterdata}) {
   const { auth } = useAuth();
   const [jobs, setJobs] = useState([]);
-  const [filteredData, setFilteredData] = useState(jobs);
 
-  const fetchJobs = async () => {
-    const config = {};
+  const fetchJobs = async (config_params) => {
+    const config = config_params;
     const response = await axios_job.get(API_PATHS.JOB_ALL, config);
     let jobs_retrieved = response.data;
- 
     setJobs(jobs_retrieved);
-    setFilteredData(jobs_retrieved)
-    console.log(jobs_retrieved)
   };
-
-  useEffect(() => {
-    fetchJobs();
-  }, []);
-
-
   
   useEffect(() => {
-    if (filterdata.searchkeyword.trim() !== '' && filterdata.location.trim() !== ''){
-        console.log(filterdata)
+    if (filterdata.searchkeyword.trim() !== '' || filterdata.location.trim() !== ''){
         const searchkeyword = filterdata.searchkeyword.toLowerCase().trim();
         const searchlocation = filterdata.location.toLowerCase().trim();
-      
-        const filtered = jobs.filter(item =>
-            item.title.toLowerCase().includes(searchkeyword) &&
-            item.job_locations.toLowerCase().includes(searchlocation)
-        );
-        console.log(filtered)
-        setFilteredData(filtered);
+  
+        const config_params={
+          params:{
+            title:searchkeyword,
+            location:searchlocation
+          }}
+        
+        fetchJobs(config_params)
     } else {
-        setFilteredData(jobs);
-    }
-}, [filterdata.searchkeyword,filterdata.location]);
+        const config_params={}
+        fetchJobs(config_params)
+        }
 
-    
+    }, [filterdata]);
+
+
   return (
     <Container id="job-list" sx={{ width: '90%', py: { xs: 8, sm: 2 } }}>
       <Grid item xs={12} md={6}>
@@ -78,7 +70,7 @@ export default function JobList({filterdata}) {
           spacing={2}
           useFlexGap
           sx={{ width: '100%', display: { xs: 'none', sm: 'flex' } }}>
-          {filteredData.map((j) => (
+          {jobs.map((j) => (
             <JobCard key={j.id} jobDetails={j} />
           ))}
         </Stack>

@@ -66,19 +66,14 @@ function AiInterviewWizard() {
   return (
     <div>
       <div className="job_listing_area">
-        <div className="container" >
+        <div className="container">
           {(aiInterview && showAiInterviewWelcome && (
-            <Stack spacing={2} alignItems="center" marginTop={5}>
+            <Stack spacing={2} alignItems="center">
               <ReactPlayer
                 url={`${STATIC_CONTENT_GATEWAY_HOST}/uploads/videos/video_question_welcome_${aiInterview.id}.webm`}
                 controls
                 width="80%"
                 height="80%"
-                volume={0.5}
-                autoPlay
-                muted={true}
-                playing={true}
-                loop
               />
               <Button variant="contained" onClick={initiateInterview}>
                 Start Interview
@@ -101,10 +96,6 @@ function AiInterviewWizard() {
                   controls
                   width="80%"
                   height="80%"
-                  volume={0.5}
-                  muted={true}
-                  autoPlay
-                  playing={true}
                 />
                 <Button variant="contained" href="/">
                   Close
@@ -112,7 +103,7 @@ function AiInterviewWizard() {
               </Stack>
             )) ||
             (aiInterview === undefined && (
-              <Stack spacing={2} alignItems="center" marginTop={90}>
+              <Stack spacing={2} alignItems="center">
                 <div>Invalid Link</div>
               </Stack>
             ))}

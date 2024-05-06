@@ -126,9 +126,8 @@ function JobRow(props: { key: string; job: Job }) {
                       <TableRow>
                         <TableCell align="center">Candidate Name</TableCell>
                         <TableCell align="center">Status</TableCell>
-                        <TableCell align="center">AI Optin</TableCell>
-                        <TableCell align="center">Created</TableCell>
-                        <TableCell align="center">Updated</TableCell>
+                        <TableCell align="center">AI Option</TableCell>
+                        <TableCell align="center">Applied_On</TableCell>
                         <TableCell />
                       </TableRow>
                     </TableHead>

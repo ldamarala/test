@@ -21,6 +21,7 @@ services:
       ENV: local
     ports:
       - "9010:8000"
+      - "9040:8000"
     depends_on:
       - db
     networks:

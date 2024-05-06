@@ -14,7 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Modal from '@mui/material/Modal';
 import SignIn from './SignIn';
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { ClipLoader } from 'react-spinners';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
@@ -52,103 +52,61 @@ function Copyright(props: any) {
 interface TokenResponse {
   access_token: string;
   refresh_token: string;
-}
+ }
 // TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 
 export default function SignUp() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false)
-  const [fname, setFname] = useState('')
-  const [sname, setSname] = useState('')
-  const [uname, setUname] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [errorMessage, setErrorMessage] = useState('');
-  const [isValid, setIsValid] = useState(true);
-  const errRef = useRef<HTMLParagraphElement>(null);
-  const [isvalidpassword, setIsvalidpassword] = useState(true)
-  const pattern = '/^[^\s@]+@[^\s@]+$/'
+  const [fname,setFname]=useState('')
+  const [sname,setSname]=useState('')
+  const [email,setEmail]=useState('')
+  const [password,setPassword]=useState('')
   //....//
   const formdata = {
-    firstname: fname,
-    lastname: sname,
-    username:uname,
-    email: email,
-    password: password
+    firstname:fname,
+    lastname:sname,
+    email:email,
+    password:password
 
   }
 
 
-  const handlefname = (e) => {
-    setFname(e.target.value)
+  const handlefname =(e)=>{
+     setFname(e.target.value)
   }
 
-  const handlesname = (e) => {
+  const handlesname =(e)=>{
     setSname(e.target.value)
   }
 
-  const handleuname = (e) => {
-    setUname(e.target.value)
-  }
-
-  const handlemail = (e) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setIsValid(emailRegex.test(e.target.value));
+  const handlemail=(e)=>{
     setEmail(e.target.value)
   }
 
-  const handlepassword = (e) => {
+  const handlepassword=(e)=>{
     setPassword(e.target.value)
   }
 
-  const handleconfirmpassword = (e) => {
-    if ((e.target.value) !== password) {
-      setIsvalidpassword(false)
-    }
-    else {
-      setIsvalidpassword(true)
-    }
-  }
-
-  const Setloading = () => {
-    setTimeout(() => {
-      setLoading(false)
-    }, 1000)
-  }
 
   const handleSubmit = async (event) => {
     setLoading(true)
     event.preventDefault();
-    if ((fname === '') || (sname === '') || (email === '') || (password === '')) {
-      alert("Please fill all **Feilds**")
-    }
-
-
+    console.log('FormData:', formdata);
     try {
-      const user_response = await axios_auth.post(
-        API_PATHS.AUTH_NEW_USER,
-        formdata,
+     const user_response = await axios_auth.post(
+       API_PATHS.AUTH_NEW_USER,
+       formdata,
+   
+     );
+     const user = user_response.data as User;
+     
+    //  #navigates to candidate page
+     navigate('/');
+     } 
+    catch {
 
-      );
-      const user = user_response.data as User;
-
-      Setloading()
-      alert("Succesfully signed up!Log in to continue")
-      navigate('/login');
-    }
-    catch (err) {
-      console.log(err)
-      if (!err?.response) {
-        setErrorMessage('No Server Response');
-      } else if (err.response?.status === 409) {
-        setErrorMessage('**User Already Exists');
-      }
-      else {
-        setErrorMessage('singup Failed');
-      }
-      alert(errorMessage)
-      if (errRef.current) errRef.current.focus();
     }
     // //write code to push userdata to database
     // const data = new FormData(event.currentTarget);
@@ -185,7 +143,6 @@ export default function SignUp() {
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
-                  value={fname}
                   required
                   fullWidth
                   id="firstName"
@@ -201,22 +158,8 @@ export default function SignUp() {
                   id="lastName"
                   label="Last Name"
                   name="lastName"
-                  value={sname}
                   autoComplete="family-name"
                   onChange={handlesname}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  autoComplete="given-name"
-                  name="userName"
-                  value={uname}
-                  required
-                  fullWidth
-                  id="userName"
-                  label="User Name"
-                  onChange={handleuname}
-                  autoFocus
                 />
               </Grid>
               <Grid item xs={12}>
@@ -226,14 +169,8 @@ export default function SignUp() {
                   id="email"
                   label="Email Address"
                   name="email"
-                  type='email'
-                  value={email}
                   autoComplete="email"
                   onChange={handlemail}
-                  error={!isValid}
-                  helperText={!isValid ? 'Please enter a valid email address.' : ''}
-                  inputProps={{ style: { borderColor: isValid ? 'initial' : 'red' } }}
-
                 />
               </Grid>
               <Grid item xs={12}>
@@ -244,23 +181,8 @@ export default function SignUp() {
                   label="Password"
                   type="password"
                   id="password"
-                  value={password}
                   autoComplete="new-password"
                   onChange={handlepassword}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  name="confirm password"
-                  label="confirm Password"
-                  type="password"
-                  id="password"
-                  onChange={handleconfirmpassword}
-                  error={!isvalidpassword}
-                  helperText={!isvalidpassword ? "Password doesn't match" : ''}
-                  inputProps={{ style: { borderColor: isvalidpassword ? 'initial' : 'red' } }}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -268,7 +190,7 @@ export default function SignUp() {
                   control={
                     <Checkbox value="allowExtraEmails" color="primary" />
                   }
-                  label="I agree terms and conditions"
+                  label="I want to receive inspiration, marketing promotions and updates via email."
                 />
               </Grid>
             </Grid>
@@ -290,6 +212,43 @@ export default function SignUp() {
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
+      <div>
+        {/* // */}
+        {/* <Link
+            color="primary"
+            variant="body2"
+            fontWeight="bold"
+            sx={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              '& > svg': { transition: '0.2s' },
+              '&:hover > svg': { transform: 'translateX(2px)' },
+            }}
+            onClick={handleOpen}>
+            <span>Learn more</span>
+            <ChevronRightRoundedIcon
+              fontSize="small"
+              sx={{ mt: '1px', ml: '2px' }}
+            />
+          </Link>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Text in a modal
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          </Typography>
+        </Box>
+      </Modal> */}
+      </div>
     </ThemeProvider>
   );
 }
+
+

@@ -6,23 +6,32 @@ import aiohttp
 from aiohttp import ClientSession
 
 from app.core.config import settings
-import os
-from dotenv import load_dotenv, find_dotenv
-_ = load_dotenv(find_dotenv())
 
-region = os.getenv("MS_SPEECH_API_SERVICE_REGION")
-subscription_key = os.getenv("MS_SPEECH_API_SUBSCRIPTION_KEY")
+region = settings.MS_SPEECH_API_SERVICE_REGION
+subscription_key = settings.MS_SPEECH_API_SUBSCRIPTION_KEY
 url_base = f"https://{region}.customvoice.api.speech.microsoft.com/api"
-output_directory = os.getenv("VIDEO_OUTPUT_DIRECTORY")
+output_directory = settings.VIDEO_OUTPUT_DIRECTORY
 SAMPLE_RATE = 16000
 
-
 greeting_templates = {
-    "welcome": """Welcome to your AI-enabled interview for the {position} position at {company_name}. We are thrilled to have you here.
-      When you're ready, click start interview and let's dive in. Best of luck, and we are here if you need any assistance.""" ,
-      
-    "thank_you": """Thank you, {candidate_name} for participating in our AI-enabled interview for the {position} role at hireai. Your responses
-      have been recorded successfully. We appreciate your time and effort. You will hear from us soon regarding the next steps. Wish you the best"""
+    "welcome": """Dear {candidate_name}, On behalf of the entire team at {company_name},
+I would like to extend a warm welcome to you for your upcoming interview for the {position} position.
+During the interview process, we will delve into your past experiences to gain a deeper understanding of your
+capabilities and how they can contribute to our dynamic environment.
+Your interview will consist of a series of questions designed to assess your qualifications and suitability
+for the role. We are particularly interested in hearing about your past experiences, challenges you've faced,
+and the outcomes you've achieved. This will help us gauge your problem-solving abilities, adaptability,
+and alignment with our company culture.
+When you are ready, please click the Start interview button below, to get started with your interview
+""",
+    "thank_you": """I wanted to take a moment to express my sincere gratitude for taking the time to interview for the
+{position} position at {company_name}. It was a pleasure meeting you.
+We understand that interviewing can be a time-consuming process, and we truly appreciate your interest in
+joining our organization. Rest assured that your candidacy is being carefully considered, and we will be in touch
+with updates on the status of your application as soon as possible.
+If you have any further questions or would like to provide additional information, please don't hesitate to reach
+out to me at recruitement@nstarx.com or 111-111-8000.
+"""
 }
 
 

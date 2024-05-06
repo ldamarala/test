@@ -4,5 +4,3 @@
 /client-app/node_modules/
 
 client-app/.DS_Store
-
-/home/ldamarala/Desktop/test-main/test-main/hireai-main/celery-worker/.env

@@ -11,12 +11,9 @@ from app.models.ai_interview_question import AiInterviewQuestion
 from app.models.job_application import JobApplication
 from app.models.user import User
 from app.services.pdf import PDF
-import os
-from dotenv import load_dotenv, find_dotenv
-_ = load_dotenv(find_dotenv())
 
-service_region = os.getenv("MS_SPEECH_API_SERVICE_REGION")
-subscription_key = os.getenv("MS_SPEECH_API_SUBSCRIPTION_KEY")
+service_region = settings.MS_SPEECH_API_SERVICE_REGION
+subscription_key = settings.MS_SPEECH_API_SUBSCRIPTION_KEY
 url_base = f"https://{service_region}.customvoice.api.speech.microsoft.com/api"
 
 
@@ -211,7 +208,7 @@ def generate_interview_questions(extracted_text):
     # Extracting only the assistant's responses
     assistant_responses = response['choices'][0]['message']['content']
     generated_questions = [message.strip()[3:] for message in assistant_responses.split('\n') if message]
-    return generated_questions[1:6]
+    return generated_questions[1:3]
 
 
 def ai_interview_feedback(ai_interview_request: str):

@@ -30,7 +30,6 @@ import EdgesensorHighRoundedIcon from '@mui/icons-material/EdgesensorHighRounded
 import ViewQuiltRoundedIcon from '@mui/icons-material/ViewQuiltRounded';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { styled } from '@mui/material/styles';
-import { isDisabled } from '@testing-library/user-event/dist/utils';
 
 const VisuallyHiddenInput = styled('input')({
   clip: 'rect(0 0 0 0)',
@@ -48,7 +47,7 @@ export default function JobDetails() {
   const { auth } = useAuth();
   const navigate = useNavigate();
   const params = useParams();
-  const  [isDisabled,setIsDisabled]=useState(false)
+
   const [jobDetails, setJobDetails] = useState<Job>();
   const [jobApplication, setJobApplication] = useState<JobApplication>(null);
 
@@ -57,7 +56,6 @@ export default function JobDetails() {
   const [aiOptIn, setAiOptIn] = useState(true);
 
   function handleFileChange(e) {
-    setIsDisabled(true)
     setFile(e.target.files[0]);
   }
 
@@ -120,10 +118,8 @@ export default function JobDetails() {
 
   useEffect(() => {
     fetchJobById();
-    console.log()
   }, [auth]);
 
-  console.log(jobDetails)
   return (
     <Container id="job-details" sx={{ py: { xs: 8, sm: 16 } }}>
       <Grid container spacing={3}>
@@ -325,7 +321,7 @@ export default function JobDetails() {
                 variant="h5"
                 align="left"
                 sx={{ my: 0.5 }}>
-                Job Summary
+                Job Summery
               </Typography>
               <Typography
                 color="text.secondary"
@@ -340,21 +336,21 @@ export default function JobDetails() {
                 variant="h6"
                 align="left"
                 sx={{ my: 0.5 }}>
-                Open positions: {jobDetails?.open_positions}
+                Open positions: 3
               </Typography>
               <Typography
                 color="text.secondary"
                 variant="h6"
                 align="left"
                 sx={{ my: 0.5 }}>
-                Salary: {jobDetails?.salary}
+                Salary: 100k - 150k
               </Typography>
               <Typography
                 color="text.secondary"
                 variant="h6"
                 align="left"
                 sx={{ my: 0.5 }}>
-                Job Nature:{jobDetails?.job_nature}
+                Job Nature: Full-time
               </Typography>
             </Stack>
           </Card>
@@ -387,12 +383,10 @@ export default function JobDetails() {
                             role={undefined}
                             variant="outlined"
                             tabIndex={-1}
-                            disabled={isDisabled}
                             startIcon={<CloudUploadIcon />}>
                             Upload Resume
                             <VisuallyHiddenInput
                               type="file"
-                              accept='.pdf'
                               onChange={handleFileChange}
                             />
                           </Button>

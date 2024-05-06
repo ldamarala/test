@@ -236,13 +236,13 @@ function JobApplicationRow(props: { jobApplication: any }) {
           {jobApplication.ai_interview_optin ? 'Yes' : 'No'}
         </TableCell>
         <TableCell align="center">
-          <Moment format="YYYY-MM-DD HH:mm">
+          <Moment format="DD-MM-YYYY HH:mm">
             {jobApplication.job.time_created}
           </Moment>
         </TableCell>
         <TableCell align="center">
           <Moment format="YYYY-MM-DD HH:mm">
-            {jobApplication.job.time_updated}
+            {jobApplication.time_updated}
           </Moment>
         </TableCell>
         <TableCell align="center">
