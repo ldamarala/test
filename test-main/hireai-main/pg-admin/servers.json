@@ -1,0 +1,13 @@
+{
+  "Servers": {
+    "1": {
+      "Name": "Hire.AI",
+      "Group": "Hire.AI",
+      "Host": "pg_container",
+      "Port": 5432,
+      "MaintenanceDB": "postgres",
+      "Username": "root",
+      "SSLMode": "prefer"
+    }
+  }
+}
